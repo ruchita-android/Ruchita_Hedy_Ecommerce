@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Ruchita_Hedy_Ecommerce</string>
+
+
+    <string name="splash_app_name">Heady Ecommerce</string>
+    <string name="developed_by">developed by Ruchita Sharma</string>
+
+    <string name="check_net">No internet connection</string>
+    <string name="retry">Retry</string>
+
+    <string name="rank_filter">Ranking Filter</string>
+
+    <string name="home_screen">Heady</string>
+
+    <string name="no_products">Products not available</string>
+
+
+</resources>
