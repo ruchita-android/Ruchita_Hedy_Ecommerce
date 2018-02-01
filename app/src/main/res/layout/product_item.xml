@@ -38,48 +38,25 @@
             android:textSize="@dimen/text_medium" />
 
         <TextView
-            android:id="@+id/tvDesc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="top|center_horizontal"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:visibility="gone">
-
-
-            <TextView
                 android:id="@+id/tvprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="aaaaaaaaaa"
-                android:textColor="#929292"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:layout_margin="@dimen/margin_small"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/text_small"
+                 />
 
-            <TextView
-                android:id="@+id/tvpercent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:gravity="right"
-                android:text="aaaa"
-                android:textColor="#6fba54"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tvRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/text_small"
+            android:visibility="gone"
+            />
 
-        </LinearLayout>
 
         <View
             android:layout_width="match_parent"

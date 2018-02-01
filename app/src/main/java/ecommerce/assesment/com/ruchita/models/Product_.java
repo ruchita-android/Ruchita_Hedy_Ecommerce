@@ -4,20 +4,22 @@ package ecommerce.assesment.com.ruchita.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Product_ {
+import java.io.Serializable;
+
+public class Product_  implements Serializable{
 
     @SerializedName("id")
     @Expose
     private Long id;
     @SerializedName("view_count")
     @Expose
-    private Integer viewCount;
+    private Long viewCount;
     @SerializedName("order_count")
     @Expose
-    private Integer orderCount;
+    private Long orderCount;
     @SerializedName("shares")
     @Expose
-    private Integer shares;
+    private Long shares;
 
     public Long getId() {
         return id;
@@ -27,27 +29,27 @@ public class Product_ {
         this.id = id;
     }
 
-    public Integer getViewCount() {
+    public Long getViewCount() {
         return viewCount;
     }
 
-    public void setViewCount(Integer viewCount) {
+    public void setViewCount(Long viewCount) {
         this.viewCount = viewCount;
     }
 
-    public Integer getOrderCount() {
+    public Long getOrderCount() {
         return orderCount;
     }
 
-    public void setOrderCount(Integer orderCount) {
+    public void setOrderCount(Long orderCount) {
         this.orderCount = orderCount;
     }
 
-    public Integer getShares() {
+    public Long getShares() {
         return shares;
     }
 
-    public void setShares(Integer shares) {
+    public void setShares(Long shares) {
         this.shares = shares;
     }
 

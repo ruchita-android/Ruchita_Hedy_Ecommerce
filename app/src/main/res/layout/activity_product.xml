@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:orientation="vertical">
+
+    <include layout="@layout/tool_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/padding_normal"
+        android:paddingRight="@dimen/padding_normal"
+        android:paddingTop="@dimen/padding_normal">
+
+
+        <ImageView
+            android:id="@+id/productimg"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:padding="@dimen/padding_large"
+            android:src="@drawable/loading_bar"
+             />
+
+
+        <TextView
+            android:id="@+id/tvProdName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:gravity="bottom|center"
+            android:maxLines="1"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_medium" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/light_grey" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/variantList"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:scrollbars="none" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/light_grey" />
+
+        <TextView
+            android:id="@+id/tvSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/dark_grey"
+            android:visibility="gone"
+            />
+
+
+        <TextView
+                android:id="@+id/tvprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/dark_grey"
+                 />
+
+        <TextView
+            android:id="@+id/tvTax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="@dimen/text_medium"
+            android:textColor="@color/dark_grey"
+            />
+
+
+
+
+    </LinearLayout>
+
+  </LinearLayout>

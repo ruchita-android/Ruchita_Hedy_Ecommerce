@@ -11,6 +11,9 @@
     <string name="rank_filter">Ranking Filter</string>
 
     <string name="home_screen">Heady</string>
+    <string name="product_screen">Product Detail</string>
+
+    <string name="filter">Filter :</string>
 
     <string name="no_products">Products not available</string>
 

@@ -15,6 +15,48 @@
         android:background="@color/colorPrimary"
         android:scrollbars="none" />
 
+    <LinearLayout
+        android:id="@+id/llFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/padding_large"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium"
+            android:text="@string/filter"/>
+
+        <TextView
+            android:id="@+id/tvFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_medium"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/padding_large"
+            />
+
+        <TextView
+            android:id="@+id/tvClearFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_gravity="right"
+            android:text="Clear Filter"
+            android:textSize="@dimen/text_large"
+            android:paddingLeft="@dimen/padding_large"
+            android:paddingRight="@dimen/padding_large"
+            android:textStyle="bold"
+            android:onClick="clearFilter"
+            />
+
+    </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

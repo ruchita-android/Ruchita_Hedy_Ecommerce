@@ -3,7 +3,6 @@ package ecommerce.assesment.com.ruchita.activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +55,8 @@ public class HomeScreen extends BaseActivity {
     private List<Category> catList;
     private List<Ranking> rankList;
     private HashMap<Long, Product> productIdHashMap;
+    private TextView tvFilter;
+    private LinearLayout llFilters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,9 @@ public class HomeScreen extends BaseActivity {
         catTypeList.setItemAnimator(new DefaultItemAnimator());
 
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        llFilters = (LinearLayout) findViewById(R.id.llFilters);
         tvNoProd = (TextView) findViewById(R.id.tvNoProd);
+        tvFilter = (TextView) findViewById(R.id.tvFilter);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         getDataFromServer();
@@ -99,9 +104,11 @@ public class HomeScreen extends BaseActivity {
 
         switch (item.getItemId()) {
             case R.id.filter: {
-                PopupWindow popup = showRankingList();
-                popup.showAsDropDown(findViewById(item.getItemId()), 0, 0);
-                return true;
+                if(rankList!=null) {
+                    PopupWindow popup = showRankingList();
+                    popup.showAsDropDown(findViewById(item.getItemId()), 0, 0);
+                    return true;
+                }
             }
         }
         return super.onOptionsItemSelected(item);
@@ -149,7 +156,7 @@ public class HomeScreen extends BaseActivity {
                                 List<Product> products = catList.get(selectedPosition).getProducts();
 
                                 if (productAdapter != null && products.size() > 0) {
-                                    productAdapter = new ProductAdapter(HomeScreen.this, products);
+                                    productAdapter = new ProductAdapter(HomeScreen.this, products, false);
                                     recyclerView.setAdapter(productAdapter);
                                     recyclerView.setVisibility(View.VISIBLE);
                                     tvNoProd.setVisibility(View.GONE);
@@ -165,12 +172,13 @@ public class HomeScreen extends BaseActivity {
 
                         if (catList != null && catList.size() > 0) {
                             products = catList.get(0).getProducts();
-                            productAdapter = new ProductAdapter(HomeScreen.this, products);
+                            productAdapter = new ProductAdapter(HomeScreen.this, products, false);
                             recyclerView.setAdapter(productAdapter);
                         }
+                        llFilters.setVisibility(View.GONE);
+                        catTypeList.setVisibility(View.VISIBLE);
 
                         productIdHashMap = new HashMap<>();
-
 
 //                        Getting all products for ranking.
                         for (Category c : catList) {
@@ -193,7 +201,7 @@ public class HomeScreen extends BaseActivity {
     }
 
     private PopupWindow showRankingList() {
-        PopupWindow popupWindow = new PopupWindow(this);
+        final PopupWindow popupWindow = new PopupWindow(this);
 
         RecyclerView rankfilterview = new RecyclerView(this);
         LinearLayoutManager mLayoutManager1 = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
@@ -205,13 +213,13 @@ public class HomeScreen extends BaseActivity {
             @Override
             public void onItemClick(int selectedPosition) {
                 getProductsByRank(selectedPosition);
+                popupWindow.dismiss();
             }
         });
 
         rankfilterview.setAdapter(rankingAdapter);
 
         popupWindow.setFocusable(true);
-        popupWindow.setWidth(250);
         popupWindow.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         popupWindow.setContentView(rankfilterview);
         return popupWindow;
@@ -221,24 +229,72 @@ public class HomeScreen extends BaseActivity {
     private void getProductsByRank(int position) {
         List<Product_> products = rankList.get(position).getProducts();
 
+        if (rankList.get(position).getRanking().equalsIgnoreCase("Most Viewed Products"))
+            Collections.sort(products, new ViewCountSort());
+        else if (rankList.get(position).getRanking().equalsIgnoreCase("Most OrdeRed Products"))
+            Collections.sort(products, new OrderCountSort());
+        else if (rankList.get(position).getRanking().equalsIgnoreCase("Most Viewed Products"))
+            Collections.sort(products, new SharesSort());
+
         List<Product> rankedProducts = new ArrayList<Product>();
 
-        for (Product_ prod : products) {
-            rankedProducts.add(productIdHashMap.get(prod.getId()));
+        for (Product_ rankProd : products) {
+            Product product = productIdHashMap.get(rankProd.getId());
+            product.setRankProduct(rankProd);
+            rankedProducts.add(product);
         }
 
         if (productAdapter != null && rankedProducts.size() > 0) {
-            productAdapter = new ProductAdapter(HomeScreen.this, rankedProducts);
+            productAdapter = new ProductAdapter(HomeScreen.this, rankedProducts, true);
             recyclerView.setAdapter(productAdapter);
             recyclerView.setVisibility(View.VISIBLE);
             tvNoProd.setVisibility(View.GONE);
             catTypeList.setVisibility(View.GONE);
-
+            llFilters.setVisibility(View.VISIBLE);
+            tvFilter.setText(rankList.get(position).getRanking());
         } else {
             recyclerView.setVisibility(View.GONE);
             tvNoProd.setVisibility(View.VISIBLE);
+            llFilters.setVisibility(View.GONE);
         }
     }
 
 
+    public class ViewCountSort implements Comparator<Product_> {
+        @Override
+        public int compare(Product_ p1, Product_ p2) {
+            return p1.getViewCount().compareTo(p2.getViewCount());
+        }
+    }
+
+    public class OrderCountSort implements Comparator<Product_> {
+        @Override
+        public int compare(Product_ p1, Product_ p2) {
+            return p1.getOrderCount().compareTo(p2.getOrderCount());
+        }
+    }
+
+    public class SharesSort implements Comparator<Product_> {
+        @Override
+        public int compare(Product_ p1, Product_ p2) {
+            return p1.getShares().compareTo(p2.getShares());
+        }
+    }
+
+    public void clearFilter(View v) {
+        llFilters.setVisibility(View.GONE);
+        catTypeList.setVisibility(View.VISIBLE);
+        if (catList != null && catList.size() > 0) {
+            categoryAdapter.selectedPosition = 0;
+            products = catList.get(0).getProducts();
+            productAdapter = new ProductAdapter(HomeScreen.this, products, false);
+            recyclerView.setAdapter(productAdapter);
+            categoryAdapter.notifyDataSetChanged();
+
+        }
+
+
+    }
 }
+
+

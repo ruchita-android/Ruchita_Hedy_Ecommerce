@@ -27,6 +27,10 @@
             android:name=".activity.HomeScreen"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.ProductDescription"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

@@ -12,44 +12,45 @@ import java.util.List;
 
 import ecommerce.assesment.com.ruchita.R;
 import ecommerce.assesment.com.ruchita.models.Category;
+import ecommerce.assesment.com.ruchita.models.Variant;
 
 /**
  * Created by root on 30/1/18.
  */
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
+public class VariantsAdapter extends RecyclerView.Adapter<VariantsAdapter.MyViewHolder> {
 
-    private final List<Category> catList;
-    private final CategorySelect catSelect;
-    public int selectedPosition;
+    private final List<Variant> variantList;
+    private final ItemSelected catSelect;
+    private int selectedPosition = 0;
 
-    public CategoryAdapter(Context context, List<Category> list, CategorySelect catSelect) {
-        this.catList = list;
-        this.catSelect = catSelect;
+    public VariantsAdapter( List<Variant> list, ItemSelected itemSelect) {
+        this.variantList = list;
+        this.catSelect = itemSelect;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cate_type_list, parent, false);
+                .inflate(R.layout.variant_items, parent, false);
 
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        holder.catName.setText(catList.get(position).getName());
-
+        holder.tvColor.setText(variantList.get(position).getColor());
+        
         if (selectedPosition == position)
-            holder.catName.setTextColor(Color.WHITE);
-        else
-            holder.catName.setTextColor(Color.parseColor("#BDBDBD"));
+            holder.tvColor.setBackgroundResource(R.drawable.rectangle_box_selected);
+     else
+            holder.tvColor.setBackgroundResource(R.drawable.rectangle_box);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectedPosition = holder.getAdapterPosition();
-                catSelect.onItemClick(selectedPosition);
+                catSelect.onItemClick(variantList.get(holder.getAdapterPosition()));
                 notifyDataSetChanged();
 
             }
@@ -58,20 +59,20 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return catList.size();
+        return variantList.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private final TextView catName;
+        private final TextView tvColor;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            catName = (TextView) itemView.findViewById(R.id.catName);
+            tvColor = (TextView) itemView.findViewById(R.id.tvColorV);
         }
     }
 
 
-    public interface CategorySelect {
-        void onItemClick(int selectedPosition);
+    public interface ItemSelected {
+        void onItemClick(Variant variant);
     }
 }

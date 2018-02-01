@@ -3,11 +3,12 @@ package ecommerce.assesment.com.ruchita.models;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Product {
+public class Product implements Serializable{
 
     @SerializedName("id")
     @Expose
@@ -24,6 +25,10 @@ public class Product {
     @SerializedName("tax")
     @Expose
     private Tax tax;
+    @SerializedName("rank_product")
+    @Expose
+    private Product_ rankProduct;
+
 
     public Long getId() {
         return id;
@@ -65,4 +70,11 @@ public class Product {
         this.tax = tax;
     }
 
+    public Product_ getRankProduct() {
+        return rankProduct;
+    }
+
+    public void setRankProduct(Product_ rankProduct) {
+        this.rankProduct = rankProduct;
+    }
 }
